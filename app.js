@@ -35,7 +35,7 @@ inquirer
         },
     ])
 
-    .then(function (data) {
+    .then(function () {
         addToTeam()
     })
 }
@@ -51,4 +51,46 @@ function addToTeam () {
         choices: ['engineer', 'intern', 'I am done adding members.'],
     }
     ])
+
+    .then(function (data) {
+        switch (data.addToTeam) {
+            case 'engineer':
+                engineerPrompts();
+                break;
+            case 'intern':
+                break;
+            case 'I am done adding members.':
+                break;
+            
+        }  
+    })
+}
+
+function engineerPrompts() {
+    inquirer
+        .prompt ([
+            {
+                type: 'input',
+                name: 'engName',
+                message: "What is your name?",
+            },
+            {
+                type: 'input',
+                name: 'engEmpID',
+                message: 'What is your employee ID?',
+            },
+            {
+                type: 'input',
+                name: 'engEmail',
+                message: 'What is your email address?',
+            },
+            {
+                type: 'input',
+                name: 'engGithub',
+                message: 'What is your GitHub username?',
+            },
+        ])
+
+    .then; addToTeam()
+
 }
