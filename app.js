@@ -10,8 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-function managerPromts() {
-inquirer
+async function managerPrompts() {
+var test = await inquirer
     .prompt ([
         {
             type: 'input',
@@ -35,15 +35,24 @@ inquirer
         },
     ])
 
-    .then(function () {
-        addToTeam()
-    })
+    .then(async function (manager) {
+        var memArr = [];
+        while(memArr.length == 0 || memArr [memArr.length - 1].type !== 'I am done adding members.' ) {
+            memArr.push(await addToTeam());
+        }
+        memArr.pop();
+        return {manager: manager, members: memArr}
+
+        
+    });
+    console.log(test);
 }
 
-managerPromts();
+managerPrompts();
 
-function addToTeam () {
-    inquirer.prompt([
+async function addToTeam () {
+    var teamMember
+    return await inquirer.prompt([
     {
         type: 'list',
         name: 'memberChoice',
@@ -52,22 +61,30 @@ function addToTeam () {
     }
     ])
 
-    .then(function (data) {
-        switch (data.addToTeam) {
+    .then(async function (data) {
+        console.log(data);
+        switch (data.memberChoice){
             case 'engineer':
-                engineerPrompts();
+                var engBro = await engineerPrompts();
+                teamMember = {type: 'engineer', 
+                name: engBro.engName, 
+                id: engBro.engEmpID,
+                email: engBro.engEmail,
+                github: engBro.engGithub}
                 break;
             case 'intern':
                 break;
             case 'I am done adding members.':
+                teamMember = {type: 'I am done adding members.'}
                 break;
             
         }  
-    })
+    return teamMember;
+    });
 }
 
-function engineerPrompts() {
-    inquirer
+async function engineerPrompts() {
+    return await inquirer
         .prompt ([
             {
                 type: 'input',
@@ -91,6 +108,8 @@ function engineerPrompts() {
             },
         ])
 
-    .then; addToTeam()
+    .then (data => {
+        return data;
+    });
 
 }
