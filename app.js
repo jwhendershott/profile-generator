@@ -31,13 +31,24 @@ inquirer
         {
             type: 'input',
             name: 'mangEmail',
-            message: 'What is your email address?'
-        }
-    ]);
+            message: 'What is your email address?',
+        },
+    ])
+
+    .then(function (data) {
+        addToTeam()
+    })
 }
 
-function addTeam () {
+managerPromts();
+
+function addToTeam () {
     inquirer.prompt([
-        
+    {
+        type: 'list',
+        name: 'memberChoice',
+        message: 'Who would you like to add to your team?',
+        choices: ['engineer', 'intern', 'I am done adding members.'],
+    }
     ])
 }
