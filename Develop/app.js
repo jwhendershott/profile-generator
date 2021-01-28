@@ -77,8 +77,8 @@ async function addToTeam () {
             teamMember = {type: 'intern',
             name: internBro.internName,
             id: internBro.internEmpID,
-            email: internBro.school,
-            github: internBro.internGithub}
+            email: internBro.internEmail,
+            school: internBro.school}
                 break;
             case 'I am done adding members.':
                 teamMember = {type: 'I am done adding members.'}
@@ -134,13 +134,13 @@ async function internPrompts() {
             },
             {
                 type: 'input',
-                name: 'school',
-                message: 'What school do you go to?',
+                name: 'internEmail',
+                message: 'What is your email?',
             },
             {
                 type: 'input',
-                name: 'internGithub',
-                message: 'What is your GitHub username?',
+                name: 'school',
+                message: 'What school do you go to?',
             },
         ])
 
