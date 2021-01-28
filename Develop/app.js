@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+var memArr = [];
+
 async function managerPrompts() {
 var test = await inquirer
     .prompt ([
@@ -36,7 +38,6 @@ var test = await inquirer
     ])
 
     .then(async function (manager) {
-        var memArr = [];
         while(memArr.length == 0 || memArr [memArr.length - 1].type !== 'I am done adding members.' ) {
             memArr.push(await addToTeam());
         }
@@ -44,8 +45,17 @@ var test = await inquirer
         return {manager: manager, members: memArr}
 
         
+
+        
     });
     console.log(test);
+
+    const obj = Object.assign({}, memArr);
+    console.log(obj);
+
+    fs.writeFile(outputPath, render(obj), (err) =>
+    err ? console.error(err) : console.log("Got it, bro")
+    );
 }
 
 managerPrompts();
@@ -57,24 +67,24 @@ async function addToTeam () {
         type: 'list',
         name: 'memberChoice',
         message: 'Who would you like to add to your team?',
-        choices: ['engineer', 'intern', 'I am done adding members.'],
+        choices: ['Engineer', 'Intern', 'I am done adding members.'],
     }
     ])
 
     .then(async function (data) {
         console.log(data);
         switch (data.memberChoice){
-            case 'engineer':
+            case 'Engineer':
                 var engBro = await engineerPrompts();
-                teamMember = {type: 'engineer', 
+                teamMember = {Role: 'Engineer', 
                 name: engBro.engName, 
                 id: engBro.engEmpID,
                 email: engBro.engEmail,
                 github: engBro.engGithub}
                 break;
-            case 'intern': 
+            case 'Intern': 
             var internBro = await internPrompts();
-            teamMember = {type: 'intern',
+            teamMember = {Role: 'Intern',
             name: internBro.internName,
             id: internBro.internEmpID,
             email: internBro.internEmail,
@@ -87,6 +97,7 @@ async function addToTeam () {
         }  
     return teamMember;
     });
+    
 }
 
 async function engineerPrompts() {
@@ -149,3 +160,6 @@ async function internPrompts() {
     });
 }
 
+// fs.writeFile(outputPath, render(memArr), (err) =>
+//     err ? console.err(err) : console.log("Got it, bro")
+//     );
