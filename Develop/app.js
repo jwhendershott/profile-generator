@@ -42,18 +42,13 @@ var test = await inquirer
             memArr.push(await addToTeam());
         }
         memArr.pop();
-        return {manager: manager, members: memArr}
+        memArr.push(new Manager(manager.mangName, manager.empID, manager.officeNo, manager.mangEmail));
+        return {memArr}
 
-        
-
-        
     });
     console.log(test);
 
-    const obj = Object.assign({}, memArr);
-    console.log(obj);
-
-    fs.writeFile(outputPath, render(obj), (err) =>
+    fs.writeFile(outputPath, render(memArr), (err) =>
     err ? console.error(err) : console.log("Got it, bro")
     );
 }
@@ -63,7 +58,7 @@ managerPrompts();
 async function addToTeam () {
     var teamMember
     return await inquirer.prompt([
-    {
+    {   
         type: 'list',
         name: 'memberChoice',
         message: 'Who would you like to add to your team?',
@@ -76,19 +71,14 @@ async function addToTeam () {
         switch (data.memberChoice){
             case 'Engineer':
                 var engBro = await engineerPrompts();
-                teamMember = {Role: 'Engineer', 
-                name: engBro.engName, 
-                id: engBro.engEmpID,
-                email: engBro.engEmail,
-                github: engBro.engGithub}
+                teamMember = new Engineer(engBro.engName, engBro.engEmpID, engBro.engEmail, engBro.engGithub )
                 break;
             case 'Intern': 
             var internBro = await internPrompts();
-            teamMember = {Role: 'Intern',
-            name: internBro.internName,
-            id: internBro.internEmpID,
-            email: internBro.internEmail,
-            school: internBro.school}
+            teamMember = new Intern(internBro.internName, 
+                internBro.internEmpID,
+                internBro.internEmail,
+                internBro.school)
                 break;
             case 'I am done adding members.':
                 teamMember = {type: 'I am done adding members.'}
@@ -159,7 +149,3 @@ async function internPrompts() {
         return data;
     });
 }
-
-// fs.writeFile(outputPath, render(memArr), (err) =>
-//     err ? console.err(err) : console.log("Got it, bro")
-//     );
