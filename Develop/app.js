@@ -96,22 +96,22 @@ async function engineerPrompts() {
             {
                 type: 'input',
                 name: 'engName',
-                message: "What is your name?",
+                message: "What is the their name?",
             },
             {
                 type: 'input',
                 name: 'engEmpID',
-                message: 'What is your employee ID?',
+                message: 'What is their employee ID?',
             },
             {
                 type: 'input',
                 name: 'engEmail',
-                message: 'What is your email address?',
+                message: 'What is their email address?',
             },
             {
                 type: 'input',
                 name: 'engGithub',
-                message: 'What is your GitHub username?',
+                message: 'What is their GitHub username?',
             },
         ])
 
@@ -126,22 +126,22 @@ async function internPrompts() {
             {
                 type: 'input',
                 name: 'internName',
-                message: "What is your name?",
+                message: "What is their name?",
             },
             {
                 type: 'input',
                 name: 'internEmpID',
-                message: 'What is your employee ID?',
+                message: 'What is their employee ID?',
             },
             {
                 type: 'input',
                 name: 'internEmail',
-                message: 'What is your email?',
+                message: 'What is their email?',
             },
             {
                 type: 'input',
                 name: 'school',
-                message: 'What school do you go to?',
+                message: 'What school do they go to?',
             },
         ])
 
